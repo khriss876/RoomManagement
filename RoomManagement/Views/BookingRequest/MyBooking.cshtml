@@ -1,0 +1,111 @@
+﻿@model EmployeeBookingRequestViewModel
+
+@{
+    ViewData["Title"] = "MyBooking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>My Booking Allocations</h1>
+<div class="jumbotron">
+    <div class="card">
+        <ul class=" list-group list-group-flush">
+            @foreach (var item in Model.BookingRequests)
+            {
+                <li class="list-group-item">
+                    <h6>@item.RoomType.RoomName <span class="badge badge-secondary" >@item.NumberOfDays</span></h6>
+                </li>
+            }
+
+
+        </ul>
+    </div>
+</div>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<hr />
+<h1>My Booking Records</h1>
+<table id="tblData" class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                CheckinDate
+            </th>
+            <th>
+               CheckOutDate
+            </th>
+            
+            <th>
+                Date Requested
+            </th>
+            <th>
+               Date Actioned
+            </th>
+            <th>
+               Room Type
+            </th>
+          
+            
+            <th>
+                Approved Status
+            </th>
+            <th>
+                Cancel Booking Request
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.BookingRequests) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckinDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOutDate)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.DateRequested)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateActioned)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomType.RoomName)
+            </td>
+
+            <td>
+                @if (item.Cancelled)
+                {
+                <span class="badge badge-secondary">Cancelled</span>
+                }else if(item.Approved == true)
+                {
+                    <span class="badge badge-success">Approved</span>
+                }
+                else if (item.Approved == false)
+                {
+                    <span class="badge badge-danger">Rejected</span>
+
+                }
+                else
+                {
+                    <span class="badge badge-warning">Pending Booking</span>
+
+                }
+
+            </td>
+
+            <td>
+              @if(!item.Cancelled && item.CheckinDate > DateTime.Now )
+              {
+                  <a asp-action="CancelRequest" class=" btn btn-danger fa fa-remove" asp-rout-id="@item.Id" onclick="return confirm ('Are you sure you want to cancel this Booking')"></a>
+              }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

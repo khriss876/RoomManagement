@@ -1,0 +1,118 @@
+﻿@using RoomManagement.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Employee> SignInManager
+@inject UserManager<Employee> UserManager
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Inex Hotel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inex Hotel</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" asp-area="" asp-controller="RoomType" asp-action="Index">BOOK NOW</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" asp-area="" asp-controller="BookingRequest" asp-action="Create">Apply For Booking</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" asp-area="" asp-controller="BookingRequest" asp-action="MyBooking">My Bookings</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+
+
+                        <li class="nav-item dropdown">
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    About Us
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Gallery</a>
+                                    <a class="dropdown-item" href="#">FAQ</a>
+                                    <a class="dropdown-item" href="#">Contact & Information</a>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                if (User.IsInRole("Administrator"))
+                                {
+                                <li class="nav-item dropdown">
+
+                                    <div class="dropdown">
+                                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Manage </a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" asp-controller="RoomType" asp-action="Index">Booked Rooms </a>
+                                            <a class="dropdown-item" asp-controller="Booking" asp-action="Index">Booking Allocation</a>
+                                            <a class="dropdown-item" asp-controller="Booking" asp-action="ListEmployees">Employees/Customers</a>
+                                            <a class="dropdown-item" asp-controller="BookingRequest" asp-action="Index">Booking Requests</a>
+                                           
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+
+                        }
+
+                        </ul>
+                    </div>
+
+                </div>
+
+            </nav>
+        </header>
+
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+
+            </main>
+
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; @DateTime.Now.Year - Inex Hotel - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        @RenderSection("Scripts", required: false)
+    </body>
+</html>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<RoomManagement.Models.RoomTypeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Book Room Here!</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success"> <i class="fa fa-plus-circle" aria-hidden="true"> </i> Add Room </a>
+</p>
+<table id="tblData"class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefaultDays) 
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomName)
+            </td>
+            <td>
+                <p>$ @Html.DisplayFor(modelItem => item.RoomPrice)</p>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+         
+            <td>
+                @Html.DisplayFor(modelItem => item.DefaultDays)
+            </td>
+            <td>
+                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.RoomTypeId"> <i class="fa fa-pencil-square" aria-hidden="true"></i> Edit</a> |
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.RoomTypeId"> <i class="fa fa-info-circle" aria-hidden="true"></i> Details</a> |
+                <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.RoomTypeId" onclick="return confirm('Are you sure you want to DELETE this record ?') "> <i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{ 
+<script>
+
+</script>
+}
